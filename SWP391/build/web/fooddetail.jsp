@@ -49,7 +49,7 @@
                     </a>
                     <div id="menu">
                         <div class="item">
-                            <a class="item-menu-content" href="index.html">Trang chủ</a>
+                            <a class="item-menu-content" href="home">Trang chủ</a>
                         </div>
                         <div class="item">
                             <a class="item-menu-content" href="foodmenu.html">Sản phẩm</a>
@@ -66,21 +66,22 @@
                 </div>
                 <div id="header-actions">
                     <div class="item">
-                        <form style="position: relative">
+                        <form style="position: relative" action="search" method="post">      
                             <input
                                 class="search-engine"
                                 type="text"
                                 placeholder="Tìm kiếm..."
                                 style="height: 30px"
+                                name="find"
                                 />
-                            <i
-                                class="fa-solid fa-magnifying-glass"
-                                style="position: absolute; right: 5px; top: 6px"
-                                ></i>
+                            <input class="fa-solid fa-magnifying-glass"
+                                   style="position: absolute; right: 5px; top: 6px"
+                                   type="submit" value="?">  
+                            </input>
                         </form>
                     </div>
                     <div class="item">
-                        <a href="login_register.html"><i class="fa-solid fa-user"></i></a>
+                        <a href="login"><i class="fa-solid fa-user"></i></a>
                     </div>
                     <div class="item">
                         <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
@@ -90,36 +91,39 @@
         </div>
         <!-- Main Content -->
 
-        <c:set var="infofood" value="${sessionScope.infofood}"/>
         <c:set var="account" value="${sessionScope.account}"/>
 
-        <div class="product-detail">
-            <!-- Picture -->
-            <div class="col-sm-5">
-                <img
-                    class="img-product"
-                    src="./images/background-login.jpeg"
-                    alt="mon an"
-                    />
-            </div>
-            <div class="col-sm-1"></div>
-            <!-- Information -->
-            <form action="" class="product-information col-sm-6" >
-                <!-- Header -->
-                <h1>${infofood.name_food}</h1>
-                <!-- Description -->
-                <p class="description">${infofood.describe_food}</p>
-                <!-- Price -->
-                <h3 class="price">${infofood.price_final} </h3>
-                <!-- Unit -->
-                <div class="form-outline">
-                    <input type="number" id="quantity" class="form-control" value="1" step="1"/>
+        <c:forEach items="${requestScope.infofood}" var="c">
+            <div class="product-detail">
+                <!-- Picture -->
+                <div class="col-sm-5">
+                    <img
+                        class="img-product"
+                        src="${c.img}"
+                        alt="mon an"
+                        />
                 </div>
-                <!-- Button Add -->
-                <br />
-                <button class="btn">Thêm vào giỏ hàng</button>
-            </form>
-        </div>
+                <div class="col-sm-1"></div>
+                <!-- Information -->
+                <form action="" class="product-information col-sm-6" >
+                    <!-- Header -->
+                    <h1>${c.name_food}</h1>
+                    <!-- Description -->
+                    <p class="description">${c.describe_food}</p>
+                    <!-- Price -->
+                    <h3 class="price">${c.price_final} VNĐ</h3>
+                    <!-- Unit -->
+                    <div class="form-outline">
+                        <input type="number" id="quantity" class="form-control" value="1" step="1"/>
+                    </div>
+                    <!-- Button Add -->
+                    <br />
+                    <button class="btn">Thêm vào đặt mua</button>
+                    <br />
+                    <button class="btn">Thêm vào giỏ hàng</button>
+                </form>
+            </div>
+        </c:forEach>
 
 
         <div id="comment">
@@ -131,8 +135,8 @@
                         <img src="./images/prev.png" alt="" />
                     </a>
                 </div>
-                <ul id="list-comment">
-                    <c:forEach items="${requestScope.commentfood}" var="c">
+                <c:forEach items="${requestScope.commentfood}" var="c">
+                    <ul id="list-comment">
                         <li class="item">
                             <div class="name">${c.full_name}</div>
 
@@ -147,8 +151,9 @@
                                 </p>
                             </div>
                         </li>  
-                    </c:forEach>
-                </ul>
+
+                    </ul>
+                </c:forEach>
 
                 <div class="next">
                     <a href="#">
@@ -157,7 +162,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- Footer -->
         <div id="footer">
@@ -175,7 +179,7 @@
                 <h3>NỘI DUNG</h3>
                 <ul class="quick-menu">
                     <div class="item">
-                        <a href="">Trang chủ</a>
+                        <a href="home">Trang chủ</a>
                     </div>
                     <div class="item">
                         <a href="">Sản phẩm</a>

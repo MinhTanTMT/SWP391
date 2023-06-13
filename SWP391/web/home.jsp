@@ -61,10 +61,10 @@
                         </form>
                     </div>
                     <div class="item">
-                        <i class="fa-solid fa-user"></i>
+                        <a href="login"><i class="fa-solid fa-user"></i></a>
                     </div>
                     <div class="item">
-                        <i class="fa-solid fa-cart-shopping"></i>
+                        <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
                     </div>
                 </div>
             </div>
@@ -306,7 +306,7 @@
                     <h3>NỘI DUNG</h3>
                     <ul class="quick-menu">
                         <div class="item">
-                            <a href="">Trang chủ</a>
+                            <a href="home">Trang chủ</a>
                         </div>
                         <div class="item">
                             <a href="">Sản phẩm</a>

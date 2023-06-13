@@ -34,10 +34,11 @@ public class DetailDAO {
                 + "menudaily.quantity, "
                 + "food.price_sell*menudaily.discout price_final "
                 + "from food, menudaily "
-                + "where menudaily.id_food = food.id ";
+                + "where menudaily.id_food = food.id and food.id = ?";
         // + "order by menudaily.discout DESC";
         try {
             PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, id_food);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 list.add(new MenuDaily2(
@@ -57,11 +58,13 @@ public class DetailDAO {
         return list;
     }
 
+    
+    // phan ko sua
     public List<FoodDetail> getDetailFood(int id_food) {
 
         List<FoodDetail> list = new ArrayList<>();
         //String sql="select * from Categories";
-        
+
         String sql = "select rate.id, "
                 + "rate.id_acc, "
                 + "rate.id_food, "
@@ -87,7 +90,7 @@ public class DetailDAO {
                         rs.getString("full_name"),
                         rs.getString("comment_use"),
                         rs.getString("time_comment")
-                ));
+                )); 
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -123,10 +126,13 @@ public class DetailDAO {
     public static void main(String[] args) {
         DetailDAO obj = new DetailDAO();
 
-        System.out.println(obj.getDetailFood(6).get(1).getId()+obj.getDetailFood(6).get(1).getFull_name());
-        System.out.println(obj.getAvg(6));
-        
+//        System.out.println(obj.getDetailFood(6).get(1).getId() + obj.getDetailFood(6).get(1).getFull_name());
+//        System.out.println(obj.getAvg(6));
 
+                List<MenuDaily2> list1 = obj.DetailId(6);
+                
+                System.out.println(list1.get(0).getName_food());
+               
     }
 
 }
