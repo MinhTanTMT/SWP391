@@ -64,6 +64,18 @@
                                 >Register</a
                             >
                         </li>
+                         <li class="nav-item" role="presentation">
+                            <a
+                                class="nav-link"
+                                id="tab-change"
+                                data-mdb-toggle="pill"
+                                href="#pills-change"
+                                role="tab"
+                                aria-controls="pills-change"
+                                aria-selected="false"
+                                >Changepassword</a
+                            >
+                        </li>
                     </ul>
                     <!-- Pills navs -->
 
@@ -247,6 +259,93 @@
 
 
                         </div>
+                        <div
+                            class="tab-pane fade"
+                            id="pills-change"
+                            role="tabpanel"
+                            aria-labelledby="tab-change"
+                            >  
+                             <form action="change" method="post">
+                                <div class="text-center mb-3">
+                                    <p>Sign up with:</p>
+                                    <button type="button" class="btn btn-link btn-floating mx-1">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-link btn-floating mx-1">
+                                        <i class="fab fa-google"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-link btn-floating mx-1">
+                                        <i class="fab fa-twitter"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-link btn-floating mx-1">
+                                        <i class="fab fa-github"></i>
+                                    </button>
+                                    
+                                </div>
+                                   <p class="text-center">or:</p>
+                                                                   <!-- Username input -->
+                                <div class="form-outline mb-4">
+                                    <input
+                                        type="text"
+                                        id="changeUsername"
+                                        class="form-control"
+                                        name="user"
+                                        />
+                                    <label class="form-label" for="changeUsername"
+                                           >Username</label
+                                    >
+                                </div>
+
+                                <!-- Password input -->
+                                <div class="form-outline mb-4">
+                                    <input
+                                        type="password"
+                                        id="changePassword"
+                                        class="form-control"
+                                        name="pass"
+                                        />
+                                    <label class="form-label" for="changePassword"
+                                           >Password</label
+                                    >
+                                </div>
+
+                                <!-- Repeat Password input -->
+                                <div class="form-outline mb-4">
+                                    <input
+                                        type="password"
+                                        id="changeRepeatPassword"
+                                        class="form-control"
+                                        name="repeat"
+                                        />
+                                    <label class="form-label" for="changeRepeatPassword"
+                                           >Repeat password</label
+                                    >
+                                </div>
+                                 <center>
+                                    <h1 style="color: red">${requestScope.error}</h1>
+                                </center>
+                                 <!-- Checkbox -->
+                                <div class="form-check d-flex justify-content-center mb-4">
+                                    <input
+                                        class="form-check-input me-2"
+                                        type="checkbox"
+                                        value=""
+                                        id="changeCheck"
+                                        checked
+                                        aria-describedby="changeCheckHelpText"
+                                        />
+                                    <label class="form-check-label" for="changeCheck">
+                                        I have read and agree to the terms
+                                    </label>
+                                </div>
+
+                                <!-- Submit button -->                                
+                                <input type="submit" class="btn btn-warning btn-block mb-4" value="ChangePassWord">
+                            </form>
+                             </div>                   
                     </div>
                     <!-- Pills content -->
                 </div>
