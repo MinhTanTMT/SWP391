@@ -113,6 +113,7 @@
 
 
                                 <div class="form-outline mb-4">
+                                    
                                     <input type="text" id="loginName" class="form-control" name="user"/>
                                     <label class="form-label" for="loginName">Username</label
                                     >
@@ -308,7 +309,7 @@
                                         name="pass"
                                         />
                                     <label class="form-label" for="changePassword"
-                                           >Password</label
+                                           >Enter old password</label
                                     >
                                 </div>
 
@@ -321,7 +322,19 @@
                                         name="repeat"
                                         />
                                     <label class="form-label" for="changeRepeatPassword"
-                                           >Repeat password</label
+                                           >Enter your new password</label
+                                    >
+                                </div>
+                                <!-- Enter the password input -->
+                                       <div class="form-outline mb-4">
+                                    <input
+                                        type="password"
+                                        id="changeRepeatPassword"
+                                        class="form-control"
+                                        name="repeat"
+                                        />
+                                    <label class="form-label" for="changeRepeatPassword"
+                                           >Enter a new password</label
                                     >
                                 </div>
                                  <center>
