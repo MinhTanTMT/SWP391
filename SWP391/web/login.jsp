@@ -266,7 +266,7 @@
                             role="tabpanel"
                             aria-labelledby="tab-change"
                             >  
-                             <form action="change" method="post">
+                             <form action="changepass" method="post">
                                 <div class="text-center mb-3">
                                     <p>Sign up with:</p>
                                     <button type="button" class="btn btn-link btn-floating mx-1">
@@ -306,7 +306,7 @@
                                         type="password"
                                         id="changePassword"
                                         class="form-control"
-                                        name="pass"
+                                        name="passold"
                                         />
                                     <label class="form-label" for="changePassword"
                                            >Enter old password</label
@@ -319,7 +319,7 @@
                                         type="password"
                                         id="changeRepeatPassword"
                                         class="form-control"
-                                        name="repeat"
+                                        name="passnew"
                                         />
                                     <label class="form-label" for="changeRepeatPassword"
                                            >Enter your new password</label
@@ -334,7 +334,7 @@
                                         name="repeat"
                                         />
                                     <label class="form-label" for="changeRepeatPassword"
-                                           >Enter a new password</label
+                                           >Repeat new password</label
                                     >
                                 </div>
                                  <center>
