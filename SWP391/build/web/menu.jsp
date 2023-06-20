@@ -11,14 +11,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <html>
     <head>
-        <title>Foodshop</title>
         <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="./css/styles.css" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-            />
+        <title>Foodshop</title>
+        <link rel="stylesheet" href="./css/homepage.css" />
+        <link rel="stylesheet" href="./css/menu.css" />
         <!-- Font Awesome -->
         <link
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -34,131 +32,197 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.css"
             rel="stylesheet"
             />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            />
     </head>
     <body>
-        <section id="header">
-            <div id="header-left">
-                <!-- img logo - redirect to homepage -->
-                <img
-                    style="margin-right: 10px"
-                    src="./images/png-transparent-wolf-logo-symbol.png"
-                    height="25"
-                    alt="logo"
-                    />
-                <!-- List Menu Navbar -->
-                <div>
-                    <ul id="navbar">
-                        <li>
-                            <a href="foods.html">Đồ ăn</a>
-                        </li>
-                        <li>
-                            <a href="drinks.html">Đồ uống</a>
-                        </li>
-                        <li>
-                            <a href="snacks.html">Đồ ăn vặt</a>
-                        </li>
-                        <li>
-                            <a href="fruits.html">Trái cây</a>
-                        </li>
-                    </ul>
+        <div id="wrapper">
+            <div id="header-cover">
+                <div id="header">
+                    <div id="header-left">
+                        <a href="index.html" class="logo">
+                            <img
+                                class="img-logo"
+                                src="./images/Foodshop-removebg.png"
+                                alt=""
+                                />     
+                        </a>
+                        <div id="menu">
+                            <div class="item">
+                                <a class="item-menu-content" href="index.html">Trang chủ</a>
+                            </div>
+                            <div class="item">
+                                <a class="item-menu-content" href="fooddetail.html">Sản phẩm</a>
+                            </div>
+                            <div class="item">
+                                <a class="item-menu-content" href="orderlookup.html"
+                                   >Tra cứu đơn hàng</a
+                                >
+                            </div>
+                            <div class="item">
+                                <a class="item-menu-content" href="support.html">Hỗ trợ</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="header-actions">
+                        <div class="item">
+                            <form style="position: relative">
+                                <input
+                                    class="search-engine"
+                                    type="text"
+                                    placeholder="Tìm kiếm..."
+                                    style="height: 30px"
+                                    />
+                                <i
+                                    class="fa-solid fa-magnifying-glass"
+                                    style="position: absolute; right: 5px; top: 6px"
+                                    ></i>
+                            </form>
+                        </div>
+                        <div class="item">
+                            <a href="login_register.html"><i class="fa-solid fa-user"></i></a>
+                        </div>
+                        <div class="item">
+                            <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div id="header-right">
-                <!-- Icon Searching -->
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <!-- icon cart -->
-                <i class="fa-solid fa-cart-shopping"></i>
-                <!-- Icon account -->
-                <i class="fa-solid fa-user"></i>
+
+            <div id="wp-products">
+                <h1 style="margin-bottom: 50px;">MENU</h1>
+                <div class="filter-all">
+                    <!-- Category -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success dropdown-toggle" data-mdb-toggle="dropdown" aria-expanded="false">
+                            Phân loại
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="?category=3">Món chính</a></li>
+                            <li><a class="dropdown-item" href="?category=2">Món phụ</a></li>
+                            <li><a class="dropdown-item" href="?category=1">Đồ uống</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="?category=4">Tất cả</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Giá -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-mdb-toggle="dropdown" aria-expanded="false">
+                            Giá
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="?order=1">Dưới 100.000đ</a></li>
+                            <li><a class="dropdown-item" href="?order=2">100.000đ - 200.000đ</a></li>
+                            <li><a class="dropdown-item" href="?order=3">200.000đ - 300.000đ</a></li>
+                            <li><a class="dropdown-item" href="?order=4">Trên 300.000đ</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="?order=5">Tất cả</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Sắp xếp -->
+                    <div class="btn-group dropend">
+                        <button type="button" class="btn btn-primary">
+                            <b> Top Bán chạy</b><i class="fas fa-fire"></i>
+                        </button>
+                       
+                    </div>
+                </div>
+                <hr />
+
+                <div id="wp-products" style="margin: 120px auto 0px auto !important;">
+                    <ul id="list-products">
+                        <c:forEach items="${foodmenu}" var="menu">
+                            <div class="item">
+                                <img src="${menu.img}" alt="" />  
+                                <a href="detail?num=${menu.id}">
+                                    <div class="name">${menu.name_food}</div>
+                                </a>
+                                <a href="detail?num=${menu.id}">
+                                    <div class="name">${menu.price_sell}VNĐ</div>
+                                </a>
+                                <div class="price" href="fooddetail.html">
+                                    <button class="btn btn-primary">Xem chi tiết</button>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </ul>
+                </div>
+                <div class="list-page">
+                    <c:forEach begin="1" end="${totalPages}" varStatus="loop">
+                        <div class="item">
+                            <a href="?page=${loop.index}">${loop.index}</a>
+                        </div>
+                    </c:forEach>
+                </div>
             </div>
-        </section>
 
-        <!-- Main Content -->
-        <div id="mainer">
-            <div class="foods-menu">
-                <h1>MENU</h1>
-
-                <div class="menu-list-group row">
-                    <div class="items-1 col-md-1" style="border: 1px solid black">
-                        Empty
+            <div id="footer">
+                <div class="box">
+                    <div class="logo">
+                        <img  
+                            class="footer-logo"
+                            src="./images/Foodshop-removebg.png"
+                            alt=""
+                            />
                     </div>
-
-                    <div
-                        class="items-2 col-md-10 col-sm-12"
-                        style="border: 1px solid black"
-                        >
-                        <!-- Phana loai/ Filter -->
-                        <div class="filter">Phân Loại</div>
-                        <!-- Menu Cards -->
-                        <div class="menu-list">
-                            <c:forEach items="${requestScope.foodsale}" var="c">
-                                <!-- Card 1-->
-                                <div class="card" style="width: 12rem">
-                                    <img
-                                        src="${c.img}"
-                                        class="card-img-top"
-                                        alt="anime"
-                                        />
-                                    <div class="card-body">
-                                        <p class="card-text">${c.name_food}</p>
-                                        <a href="fooddetail.html"><button class="btn btn-primary">Xem chi tiết</button></a>
-                                    </div>
-                                </div>
-                            </c:forEach>
+                    <!-- <p>Cung cấp sản phẩm với chất lượng an toàn cho quý khách</p> -->
+                </div>
+                <div class="box">
+                    <h3>NỘI DUNG</h3>
+                    <ul class="quick-menu">
+                        <div class="item">
+                            <a href="">Trang chủ</a>
                         </div>
-
-                        <div class="menu-list">                                                        
-                            <c:forEach items="${requestScope.foodcheap}" var="c">
-                                <!-- Card 1-->
-                                <div class="card" style="width: 12rem">
-                                    <img
-                                        src="${c.img}"
-                                        class="card-img-top"
-                                        alt="anime"
-                                        />
-                                    <div class="card-body">
-                                        <p class="card-text">${c.name_food}</p>
-                                        <a href="fooddetail.html"><button class="btn btn-primary">Xem chi tiết</button></a>
-                                    </div>
-                                </div>
-                            </c:forEach>   
+                        <div class="item">
+                            <a href="">Sản phẩm</a>
                         </div>
-                    </div>
-
-                    <div class="items-1 col-md-1" style="border: 1px solid black">
-                        Items 3
-                    </div>
+                        <div class="item">
+                            <a href="">Blog</a>
+                        </div>
+                        <div class="item">
+                            <a href="">Liên hệ</a>
+                        </div>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h3>LIÊN HỆ</h3>
+                    <form action="">
+                        <input type="text" placeholder="Địa chỉ email" />
+                        <button>Nhận tin</button>
+                    </form>
                 </div>
             </div>
         </div>
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-md-1"></div>
-                <div class="footer-left col-md-5 d-flex align-items-center">
-                    <!-- LOGO -->
-                    <img src="./images/png-transparent-wolf-logo-symbol.png" height="45" alt="">
-                    <!-- Address -->
-                    <p>Address: Ha dong, Ha Noi</p>
-                    <p>Phone: 0964766165</p>
-
-                </div>
-                <div class="footer-right col-md-5">
-                    <!-- Social Media -->
-                    <i class="fa-brands fa-facebook"></i>
-                    <i class="fa-brands fa-instagram"></i>
-                    <i class="fa-brands fa-shopify"></i>
-                </div>
-                <div class="col-md-1">
-
-                </div>
-            </div>
-        </footer>
-        <script src="./js/script.js"></script>
         <!-- MDB -->
         <script
             type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"
         ></script>
+        <script src="./js/script.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            function getListPage(page) {
+                $.ajax({
+                    url: 'your-controller-url',
+                    type: 'GET',
+                    data: {
+                        page: page
+                    },
+                    success: function (response) {
+                        // Xử lý dữ liệu trả về từ server
+                        // Cập nhật danh sách bản ghi trong trang JSP
+                        $('#list-products').html(response);
+                    },
+                    error: function () {
+                        // Xử lý khi có lỗi xảy ra trong quá trình gửi yêu cầu
+                        alert('Có lỗi xảy ra khi lấy danh sách bản ghi.');
+                    }
+                });
+            }
+        </script>
     </body>
 </html>

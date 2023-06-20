@@ -65,6 +65,7 @@ public class ShowDetail extends HttpServlet {
         String n = request.getParameter("num");
 
         int num = 0;
+        int rate;
         
         try {
             num = Integer.parseInt(n);
@@ -78,10 +79,14 @@ public class ShowDetail extends HttpServlet {
         List<FoodDetail> list = obj.getDetailFood(num);
 
         List<MenuDaily2> list1 = obj.DetailId(num);
-
+        
+        rate = obj.getAvg(num);
+        
         request.setAttribute("commentfood", list);
 
         request.setAttribute("infofood", list1);
+        
+        request.setAttribute("rate", rate);
 
         request.getRequestDispatcher("fooddetail.jsp").forward(request, response);
 

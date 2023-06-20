@@ -109,16 +109,20 @@
                     <!-- Header -->
                     <h1>${c.name_food}</h1>
                     <!-- Description -->
-                    <p class="description">${c.describe_food}</p>
+                    <p class="description">Mô tả: ${c.describe_food}</p>
                     <!-- Price -->
-                    <h3 class="price">${c.price_final} VNĐ</h3>
+                    <h3 class="price">Giá bán: ${c.price_final}  VNĐ</h3>
+
+                    <h3 class="price">Đánh giá sản phẩm: ${requestScope.rate} ✮</h3>
+
+
                     <!-- Unit -->
                     <div class="form-outline">
                         <input type="number" id="quantity" class="form-control" value="1" step="1"/>
-                    </div>
+                    </div>          
                     <!-- Button Add -->
                     <br />
-                    <button class="btn">Thêm vào đặt mua</button>
+                    <button class="btn">Đặt mua</button>
                     <br />
                     <button class="btn">Thêm vào giỏ hàng</button>
                 </form>
@@ -141,6 +145,7 @@
                             <div class="name">${c.full_name}</div>
 
                             <div class="stars">
+                                <h1>${c.rate}</h1>
                                 <img src="./images/star.png" alt="" />
                             </div>
 
