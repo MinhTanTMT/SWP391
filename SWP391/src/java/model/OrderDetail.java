@@ -8,50 +8,31 @@ package model;
  *
  * @author msi
  */
-public class OrderDetail extends Inforuser{
+public class OrderDetail {
 
     private int id;
-    private int id_orderdetail;
+    private String full_name;
+    private String address;
+    private String phone;
     private String timegiao;
-    private String describe_food;
-    private int ordertaking;
-    private int delivery;
-    private int customer;
     private String status_order;
-    private int id_food;
     private int quantity;
     private int price;
+    private String name_food;
 
     public OrderDetail() {
     }
 
-    public OrderDetail(int id, int id_orderdetail, String timegiao, String describe_food, int ordertaking, int delivery, int customer, String status_order, int id_food, int quantity, int price, int id_acc, String full_name, String address, String phone, String gender, String role_name) {
-        super(id_acc, full_name, address, phone, gender, role_name);
+    public OrderDetail(int id, String full_name, String address, String phone, String timegiao, String status_order, int quantity, int price, String name_food) {
         this.id = id;
-        this.id_orderdetail = id_orderdetail;
+        this.full_name = full_name;
+        this.address = address;
+        this.phone = phone;
         this.timegiao = timegiao;
-        this.describe_food = describe_food;
-        this.ordertaking = ordertaking;
-        this.delivery = delivery;
-        this.customer = customer;
         this.status_order = status_order;
-        this.id_food = id_food;
         this.quantity = quantity;
         this.price = price;
-    }
-    
-    public OrderDetail(int id, int id_orderdetail, String timegiao, String describe_food, int ordertaking, int delivery, int customer, String status_order, int id_food, int quantity, int price) {
-        this.id = id;
-        this.id_orderdetail = id_orderdetail;
-        this.timegiao = timegiao;
-        this.describe_food = describe_food;
-        this.ordertaking = ordertaking;
-        this.delivery = delivery;
-        this.customer = customer;
-        this.status_order = status_order;
-        this.id_food = id_food;
-        this.quantity = quantity;
-        this.price = price;
+        this.name_food = name_food;
     }
 
     public int getId() {
@@ -62,12 +43,28 @@ public class OrderDetail extends Inforuser{
         this.id = id;
     }
 
-    public int getId_orderdetail() {
-        return id_orderdetail;
+    public String getFull_name() {
+        return full_name;
     }
 
-    public void setId_orderdetail(int id_orderdetail) {
-        this.id_orderdetail = id_orderdetail;
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getTimegiao() {
@@ -78,52 +75,12 @@ public class OrderDetail extends Inforuser{
         this.timegiao = timegiao;
     }
 
-    public String getDescribe_food() {
-        return describe_food;
-    }
-
-    public void setDescribe_food(String describe_food) {
-        this.describe_food = describe_food;
-    }
-
-    public int getOrdertaking() {
-        return ordertaking;
-    }
-
-    public void setOrdertaking(int ordertaking) {
-        this.ordertaking = ordertaking;
-    }
-
-    public int getDelivery() {
-        return delivery;
-    }
-
-    public void setDelivery(int delivery) {
-        this.delivery = delivery;
-    }
-
-    public int getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(int customer) {
-        this.customer = customer;
-    }
-
     public String getStatus_order() {
         return status_order;
     }
 
     public void setStatus_order(String status_order) {
         this.status_order = status_order;
-    }
-
-    public int getId_food() {
-        return id_food;
-    }
-
-    public void setId_food(int id_food) {
-        this.id_food = id_food;
     }
 
     public int getQuantity() {
@@ -140,6 +97,14 @@ public class OrderDetail extends Inforuser{
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getName_food() {
+        return name_food;
+    }
+
+    public void setName_food(String name_food) {
+        this.name_food = name_food;
     }
 
 }

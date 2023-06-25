@@ -118,7 +118,7 @@
 
                     <!-- Unit -->
                     <div class="form-outline">
-                        <input type="number" id="quantity" class="form-control" value="1" step="1"/>
+                        <input type="number" id="quantity" class="form-control" min="0" value="1" step="1"/>
                     </div>          
                     <!-- Button Add -->
                     <br />
