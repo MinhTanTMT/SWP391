@@ -20,6 +20,11 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
             />
+        <style>
+            table, th, td {
+                border:1px solid black;
+            }
+        </style>
     </head>
 
     <body>
@@ -68,230 +73,122 @@
                     </div>
                 </div>
             </div>
-            <div id="banner">
-                <div class="box-left">
-                    <h2>
-                        <span>THỨC ĂN</span>
-                        <br />
-                        <span>THƯỢNG HẠNG</span>
-                    </h2>
-                    <p>
-                        Chuyên cung cấp các món ăn đảm bảo dinh dưỡng hợp vệ sinh đến người
-                        dùng,phục vụ người dùng 1 cái hoàn hảo nhất
-                    </p>
-                    <button>Mua ngay</button>
-                </div>
-                <div class="box-right">
-                    <img src="./images/img_1.png" alt="" />
-                    <img src="./images/img_2.png" alt="" />
-                    <img src="./images/img_3.png" alt="" />
-                </div>
-                <div class="to-bottom">
-                    <a href="">
-                        <img src="./images/to_bottom.png" alt="" />
-                    </a>
-                </div>
-            </div>
 
-
-            <c:set var="num1" value="${requestScope.num1}"/>
-            <c:set var="num2" value="${requestScope.num2}"/>
             <c:set var="type" value="${requestScope.type}"/>
-            <c:set var="account" value="${sessionScope.account}"/>
+            <c:set var="account" value="${sessionScope.delivery}"/>
 
-            <h2>${account.username}</h2>
-            
-            <c:if test="${type==2}">
-                <div id="wp-products">
-                    <h2>${requestScope.error}</h2>
-                    <ul id="list-products">
-                        <c:forEach items="${requestScope.search}" var="c">
-                            <div class="item">
-                                <img src="${c.img}" alt="" />  
-                                <a href="detail?num=${c.id}">
-                                    <div class="name">${c.name_food}</div>
-                                </a>
-                            </div>
-                        </c:forEach>
-                </div>
+            <c:if test="${type==3}">
+                <h2 style="font-size: 30px">&nbsp; Đơn hàng chưa xử lý:</h2>             
+                <table style="width:98%; border:5px solid black; border-radius: 10px; background-color: greenyellow; font-size: 20px; margin: 10px; color: #e67e22">
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Name food</th>
+                        <th>Select</th>
+                    </tr>  
+                    <c:forEach items="${requestScope.notdone}" var="c">
+                        <tr>
+                            <td>${c.full_name}</td>
+                            <td>${c.address}</td>
+                            <td>${c.phone}</td>
+                            <td>${c.quantity}</td>
+                            <td>${c.price}</td>
+                            <td>${c.name_food}</td>
+                            <td style="display: flex"> &nbsp;
+                                <form action="deliverydone?id=${c.id}" method="post">
+                                    <input type="submit" value="Done">
+                                </form> &nbsp;
+                                <form action="deliverycancel?id=${c.id}" method="post">
+                                    <input type="submit" value="Cancel">
+                                </form> &nbsp;
+                                <form action="delivering?id=${c.id}" method="post">
+                                    <input type="submit" value="Delivering">
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+
+                <h2 style="font-size: 30px">&nbsp; Đơn hàng đang giao:</h2>
+                <table style="width:98%; border:5px solid black; border-radius: 10px; background-color: greenyellow; font-size: 20px; margin: 10px; color: #e67e22">
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Name food</th>
+                        <th>Select</th>
+                    </tr>  
+                    <c:forEach items="${requestScope.deliver}" var="c">
+                        <tr>
+                            <td>${c.full_name}</td>
+                            <td>${c.address}</td>
+                            <td>${c.phone}</td>
+                            <td>${c.quantity}</td>
+                            <td>${c.price}</td>
+                            <td>${c.name_food}</td>
+                            <td style="display: flex"> &nbsp;
+                                <form action="deliverydone?id=${c.id}" method="post">
+                                    <input type="submit" value="Done">
+                                </form> &nbsp;
+                                <form action="deliverycancel?id=${c.id}" method="post">
+                                    <input type="submit" value="Cancel">
+                                </form> &nbsp;
+                                <form action="delivering?id=${c.id}" method="post">
+                                    <input type="submit" value="Delivering">
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+
+                <h2 style="font-size: 30px">&nbsp; Đơn hàng đã xử lý:</h2>
+                <table style="width:98%; border:5px solid black; border-radius: 10px; background-color: greenyellow; font-size: 20px; margin: 10px; color: #e67e22">
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Name food</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Select</th>
+                    </tr>  
+                    <c:forEach items="${requestScope.done}" var="c">
+                        <tr>
+                            <td>${c.full_name}</td>
+                            <td>${c.address}</td>
+                            <td>${c.phone}</td>
+                            <td>${c.quantity}</td>
+                            <td>${c.price}</td>     
+                            <td>${c.name_food}</td>
+                            <td>${c.timegiao}</td>
+                            <td>${c.status_order}</td>
+                            <td style="display: flex"> &nbsp;
+                                <form action="deliverydone?id=${c.id}" method="post">
+                                    <input type="submit" value="Done">
+                                </form> &nbsp;
+                                <form action="deliverycancel?id=${c.id}" method="post">
+                                    <input type="submit" value="Cancel">
+                                </form> &nbsp;
+                                <form action="delivering?id=${c.id}" method="post">
+                                    <input type="submit" value="Delivering">
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
             </c:if>
 
 
+
             <c:if test="${type==1}">
-                <div id="wp-products" style="margin: 120px auto 0px auto !important;">
-                    <h2>NHỮNG MÓN ĂN SIÊU SALE</h2>
-                    <ul id="list-products">
-                        <c:forEach items="${requestScope.foodsale}" var="c">
-                            <div class="item">
-                                <img src="${c.img}" alt="" />  
-                                <a href="detail?num=${c.id}">
-                                    <div class="name">${c.name_food}</div>
-                                </a>
-                                <div class="price">Giảm giá lên đến: ${c.price_final} %</div>
-                            </div>
-                        </c:forEach>
-                </div>
 
-                <div class="list-page">
-                    <div class="item">
-                        <a href="homeshow?saledisplay=${(num1+1)}&amp;cheapdisplay=${num2}">+</a>
-                    </div>
-                </div>
-
-                <div id="wp-products" style="margin: 120px auto 0px auto !important;">
-                    <h2>NHỮNG MÓN ĂN SIÊU RẺ</h2>
-                    <br>
-                    <ul id="list-products">
-                        <c:forEach items="${requestScope.foodcheap}" var="c">
-                            <div class="item">
-                                <img src="${c.img}" alt="" />  
-                                <a href="detail?num=${c.id}">
-                                    <div class="name">${c.name_food}</div>
-                                </a>
-                                <div class="price">Giá chỉ còn: ${c.price_final} VNĐ</div>
-                            </div>
-                        </c:forEach>
-                </div>
-
-                <div class="list-page">
-                    <div class="item">
-                        <a href="homeshow?saledisplay=${num1}&amp;cheapdisplay=${(num2+1)}">+</a>
-                    </div>
-                </div>
-
-                <br>
-                </ul>
-
-
-                <br>
-                </ul>
-                <div id="saleoff">
-                    <div class="box-left">
-                        <h1>
-                            <span>GIẢM GIÁ LÊN ĐẾN</span>
-                            <span>45%</span>
-                        </h1>
-                    </div>
-                    <div class="box-right"></div>
-                </div>
-
-                <div id="comment">
-                    <h2>NHẬN XÉT CỦA KHÁCH HÀNG</h2>
-                    <div id="comment-body">
-                        <div class="prev">
-                            <a href="#">
-                                <img src="./images/prev.png" alt="" />
-                            </a>
-                        </div>
-                        <ul id="list-comment">
-                            <li class="item">
-                                <div class="avatar">
-                                    <img src="./images/avatar_1.png" alt="" />
-                                </div>
-                                <div class="stars">
-                                    <span>
-                                        <img src="./images/star.png" alt="" />
-                                    </span>
-                                    <span>
-                                        <img src="./images/star.png" alt="" />
-                                    </span>
-                                    <span>
-                                        <img src="./images/star.png" alt="" />
-                                    </span>
-                                    <span>
-                                        <img src="./images/star.png" alt="" />
-                                    </span>
-                                    <span>
-                                        <img src="./images/star.png" alt="" />
-                                    </span>
-                                </div>
-                                <div class="name">Nguyễn Đình Vũ</div>
-
-                                <div class="text">
-                                    <p>
-                                        Lorem Ipsum is simply dummy text of the printing and
-                                        typesetting industry. Lorem Ipsum has been the industry's
-                                        standard dummy text ever since the 1500s, when an unknown
-                                        printer took a galley of type and scrambled it to make a type
-                                        specimen book.
-                                    </p>
-                                </div>
-                            </li>
-                            
-                            <li class="item">
-                                <div class="avatar">
-                                    <img src="./images/avatar_1.png" alt="" />
-                                </div>
-                                <div class="stars">
-                                    <span>
-                                        <img src="./images/star.png" alt="" />
-                                    </span>
-                                    <span>
-                                        <img src="./images/star.png" alt="" />
-                                    </span>
-                                    <span>
-                                        <img src="./images/star.png" alt="" />
-                                    </span>
-                                    <span>
-                                        <img src="./images/star.png" alt="" />
-                                    </span>
-                                    <span>
-                                        <img src="./images/star.png" alt="" />
-                                    </span>
-                                </div>
-                                <div class="name">Trần Ngọc Sơn</div>
-
-                                <div class="text">
-                                    <p>
-                                        Lorem Ipsum is simply dummy text of the printing and
-                                        typesetting industry. Lorem Ipsum has been the industry's
-                                        standard dummy text ever since the 1500s, when an unknown
-                                        printer took a galley of type and scrambled it to make a type
-                                        specimen book.
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="item">
-                                <div class="avatar">
-                                    <img src="./images/avatar_1.png" alt="" />
-                                </div>
-                                <div class="stars">
-                                    <span>
-                                        <img src="./images/star.png" alt="" />
-                                    </span>
-                                    <span>
-                                        <img src="./images/star.png" alt="" />
-                                    </span>
-                                    <span>
-                                        <img src="./images/star.png" alt="" />
-                                    </span>
-                                    <span>
-                                        <img src="./images/star.png" alt="" />
-                                    </span>
-                                    <span>
-                                        <img src="./images/star.png" alt="" />
-                                    </span>
-                                </div>
-                                <div class="name">Nguyễn Trần Vi</div>
-
-                                <div class="text">
-                                    <p>
-                                        Lorem Ipsum is simply dummy text of the printing and
-                                        typesetting industry. Lorem Ipsum has been the industry's
-                                        standard dummy text ever since the 1500s, when an unknown
-                                        printer took a galley of type and scrambled it to make a type
-                                        specimen book.
-                                    </p>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="next">
-                            <a href="#">
-                                <img src="./images/next.png" alt="" />
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </c:if>
 
 

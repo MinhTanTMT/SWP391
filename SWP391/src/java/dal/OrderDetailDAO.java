@@ -21,9 +21,25 @@ import model.OrderDetail;
  */
 public class OrderDetailDAO {
 
-    public List<OrderDetail> getOrderDetail(int idDelivery, String status) {
+    public List<OrderDetail> getOrderDetail(int idDelivery, int a) {
 
         Connection con = DBContext.getConnection();
+
+        String data;
+
+        if (a == 1) {
+            data = "and (oorder.status_order not like 'done' "
+                    + "and oorder.status_order not like 'ok' "
+                    + "and oorder.status_order not like 'delivering' "
+                    + "and oorder.status_order not like 'cancel') ";
+        } else if (a == 2) {
+            data = "and (oorder.status_order like 'delivering') ";
+        } else {
+            data = "and (oorder.status_order like 'done' "
+                    + "or oorder.status_order like 'ok' "
+                    + "or oorder.status_order like 'cancel') ";
+        }
+
         List<OrderDetail> list = new ArrayList<>();
         //String sql="select * from Categories";
         String sql = "select oorder.id, "
@@ -41,7 +57,7 @@ public class OrderDetailDAO {
                 + "and oorder.id_orderdetail = orderdetail.id "
                 + "and orderdetail.id_food = food.id "
                 + "and oorder.delivery = ? "
-                + "and oorder.status_order like '" + status + "' "
+                + data
                 + "order by oorder.timegiao desc;";
         try {
             PreparedStatement st = con.prepareStatement(sql);
@@ -90,7 +106,6 @@ public class OrderDetailDAO {
         String strDate = formatter.format(date);
         return strDate;
     }
-    
 
     public boolean getStatus(int idOrder) {
         Connection con = DBContext.getConnection();
@@ -99,7 +114,7 @@ public class OrderDetailDAO {
 
         String sql = "select oorder.status_order "
                 + "from oorder where oorder.id = ?";
-        
+
         try {
             PreparedStatement st = con.prepareStatement(sql);
             st.setInt(1, idOrder);
@@ -114,32 +129,26 @@ public class OrderDetailDAO {
         }
         return dk;
     }
-    
-    
-    public boolean getDKUpdateOrderDetail(int idOrder, String status){
-        
+
+    public boolean getDKUpdateOrderDetail(int idOrder, String status) {
+
         OrderDetailDAO obj = new OrderDetailDAO();
-        
+
         String time = obj.getTimeCurrent();
-        
-        if(obj.getStatus(idOrder)){
+
+        if (obj.getStatus(idOrder)) {
             obj.getUpdateOrderDetail(idOrder, status, time);
             return true;
         } else {
             return false;
-        }       
+        }
     }
-    
-    
-    
-    
+
     public static void main(String[] args) {
-        
+
         OrderDetailDAO obj = new OrderDetailDAO();
 
         String time = obj.getTimeCurrent();
-        System.out.println(obj.getDKUpdateOrderDetail(9, "bosua"));
-        
 
     }
 
