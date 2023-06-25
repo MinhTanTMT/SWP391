@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.MenuDaily;
-import model.MenuDaily2;
+import model.MenuDaily;
 
 /**
  *
@@ -67,16 +67,15 @@ public class MenuDisplay extends HttpServlet {
         String selectedCategory = request.getParameter("category");
         String selectedPrice = request.getParameter("order");
 
-        int itemsPerPage = 6; // Số lượng bản ghi hiển thị trên mỗi trang
-        int currentPage = 1; // Trang hiện tại, mặc định là 1
-
+        int itemsPerPage = 6; 
+        int currentPage = 1; 
 // Kiểm tra và lấy giá trị trang hiện tại từ tham số truyền vào (nếu có)
         String currentPageParam = request.getParameter("page");
         if (currentPageParam != null) {
             currentPage = Integer.parseInt(currentPageParam);
         }
 
-        List<MenuDaily2> foodmenu;
+        List<MenuDaily> foodmenu;
 
         if (selectedCategory != null && (selectedCategory.equals("1") || selectedCategory.equals("2") || selectedCategory.equals("3"))) {
             foodmenu = menu.getFoodCategogy(selectedCategory);
@@ -86,12 +85,13 @@ public class MenuDisplay extends HttpServlet {
             foodmenu = menu.getFoodMenu();
         }
 
-// Tính toán chỉ số bắt đầu và chỉ số kết thúc của bản ghi trên trang hiện tại
+// Tính toán chỉ số bắt đầu và chỉ số kết thúc của bản ghi trên trang hiện tại8
         int startIndex = (currentPage - 1) * itemsPerPage;
-        int endIndex = Math.min(startIndex + itemsPerPage, foodmenu.size());
+        
+        int endIndex = Math.min(startIndex + itemsPerPage, foodmenu.size());//itemsPerPage;
 
 // Trích xuất danh sách bản ghi trên trang hiện tại
-        List<MenuDaily2> currentFoodMenu = foodmenu.subList(startIndex, endIndex);
+        List<MenuDaily> currentFoodMenu = foodmenu.subList(startIndex, endIndex);
 
         int totalItems = foodmenu.size(); // Tổng số bản ghi
         int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage); // Tính toán số lượng trang
@@ -99,6 +99,7 @@ public class MenuDisplay extends HttpServlet {
 
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", currentPage);
+        //gán giá trị foodmenu cho subList bên jsp
         request.setAttribute("foodmenu", currentFoodMenu);
         request.getRequestDispatcher("menu.jsp").forward(request, response);
     }

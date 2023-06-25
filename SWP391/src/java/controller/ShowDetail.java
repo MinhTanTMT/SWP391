@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.FoodDetail;
-import model.MenuDaily2;
+import model.MenuDaily;
 
 /**
  *
@@ -78,7 +78,7 @@ public class ShowDetail extends HttpServlet {
 
         List<FoodDetail> list = obj.getDetailFood(num);
 
-        List<MenuDaily2> list1 = obj.DetailId(num);
+        List<MenuDaily> list1 = obj.DetailId(num);
         
         rate = obj.getAvg(num);
         

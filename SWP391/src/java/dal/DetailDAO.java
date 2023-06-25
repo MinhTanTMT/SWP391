@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.FoodDetail;
-import model.MenuDaily2;
+import model.MenuDaily;
 
 /**
  *
@@ -22,8 +22,8 @@ public class DetailDAO {
 
     Connection con = DBContext.getConnection();
 
-    public List<MenuDaily2> DetailId(int id_food) {
-        List<MenuDaily2> list = new ArrayList<>();
+    public List<MenuDaily> DetailId(int id_food) {
+        List<MenuDaily> list = new ArrayList<>();
 
         String sql = "select food.id, "
                 + "food.name_food, "
@@ -41,7 +41,7 @@ public class DetailDAO {
             st.setInt(1, id_food);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                list.add(new MenuDaily2(
+                list.add(new MenuDaily(
                         rs.getInt("id"),
                         rs.getString("name_food"),
                         rs.getString("describe_food"),
@@ -120,11 +120,6 @@ public class DetailDAO {
     }
 
     
-    
-    
-    public void main() {
-
-    }
 
     public static void main(String[] args) {
         DetailDAO obj = new DetailDAO();
@@ -132,7 +127,7 @@ public class DetailDAO {
 //        System.out.println(obj.getDetailFood(6).get(1).getId() + obj.getDetailFood(6).get(1).getFull_name());
 //        System.out.println(obj.getAvg(6));
 
-                List<MenuDaily2> list1 = obj.DetailId(6);
+                List<MenuDaily> list1 = obj.DetailId(6);
                 
                 System.out.println(list1.get(0).getName_food());
                

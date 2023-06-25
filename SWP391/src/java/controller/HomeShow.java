@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import model.MenuDaily2;
+import model.MenuDaily;
 
 /**
  * Lớp gọi hàm và đưa dữ liệu lên trang
@@ -71,11 +71,11 @@ public class HomeShow extends HttpServlet {
         HomeDAO obj = new HomeDAO();
 
         // Lấy danh sách dữ liệu
-        List<MenuDaily2> foodmenu = obj.getFoodMenu(); 
+        List<MenuDaily> foodmenu = obj.getFoodMenu(); 
 
-        List<MenuDaily2> foodcheap = obj.getFoodCheap(foodmenu);
+        List<MenuDaily> foodcheap = obj.getFoodCheap(foodmenu);
 
-        List<MenuDaily2> foodsale = obj.getFoodSale(foodmenu);
+        List<MenuDaily> foodsale = obj.getFoodSale(foodmenu);
 
         // Bắn dữ liệu lên trang
         request.setAttribute("foodsale", obj.setDisplay(foodsale, num1, 1));

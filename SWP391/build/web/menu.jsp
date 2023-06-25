@@ -1,6 +1,3 @@
-
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -47,7 +44,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                 class="img-logo"
                                 src="./images/Foodshop-removebg.png"
                                 alt=""
-                                />     
+                                />
                         </a>
                         <div id="menu">
                             <div class="item">
@@ -90,14 +87,49 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </div>
                 </div>
             </div>
+            <%
+                int totalPages = (Integer) request.getAttribute("totalPages");
+                int currentPage = (Integer) request.getAttribute("currentPage");
+                String selectedCategory = request.getParameter("category");
+                String selectedPrice = request.getParameter("order");
+                String title = "MENU";
+                String category = "Phân loại";
+                String price = "Giá";
+                if (selectedCategory != null) {
+                    if (selectedCategory.equals("1")) {
+                        title = "MENU ĐỒ UỐNG";
+                        category = "Đồ uống";
+                    } else if (selectedCategory.equals("2")) {
+                        title = "MENU MÓN PHỤ";
+                        category = "Món phụ";
+                    } else if (selectedCategory.equals("3")) {
+                        title = "MENU MÓN CHÍNH";
+                        category = "Món chính";
+                    } else if (selectedCategory.equals("4")) {
+                        title = "MENU";
+                    }
+                }
 
+                if (selectedPrice != null) {
+                    if (selectedPrice.equals("1")) {
+                        price = "Dưới 100.000đ";
+                    } else if (selectedPrice.equals("2")) {
+                        price = "100.000đ - 200.000đ";
+                    } else if (selectedPrice.equals("3")) {
+                        price = "200.000đ - 300.000đ";
+                    } else if (selectedPrice.equals("4")) {
+                        price = "Trên 300.000đ";
+                    }
+                }
+
+            %>
             <div id="wp-products">
-                <h1 style="margin-bottom: 50px;">MENU</h1>
+                <h1 style="margin-bottom: 50px;"><%= title%></h1>
                 <div class="filter-all">
                     <!-- Category -->
                     <div class="btn-group">
                         <button type="button" class="btn btn-success dropdown-toggle" data-mdb-toggle="dropdown" aria-expanded="false">
-                            Phân loại
+                            <%= category%>
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="?category=3">Món chính</a></li>
@@ -111,7 +143,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <!-- Giá -->
                     <div class="btn-group">
                         <button type="button" class="btn btn-info dropdown-toggle" data-mdb-toggle="dropdown" aria-expanded="false">
-                            Giá
+                            <%= price%>
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="?order=1">Dưới 100.000đ</a></li>
@@ -125,10 +157,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
                     <!-- Sắp xếp -->
                     <div class="btn-group dropend">
-                        <button type="button" class="btn btn-primary">
-                            <b> Top Bán chạy</b><i class="fas fa-fire"></i>
+                        <button type="button" href="facebook.com" class="btn btn-primary" aria-expanded="false">
+                            <b>Bán chạy </b><i class="fas fa-fire"></i>
                         </button>
-                       
                     </div>
                 </div>
                 <hr />
@@ -142,7 +173,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                     <div class="name">${menu.name_food}</div>
                                 </a>
                                 <a href="detail?num=${menu.id}">
-                                    <div class="name">${menu.price_sell}VNĐ</div>
+                                    <div class="name">${menu.price_sell} VNĐ</div>
                                 </a>
                                 <div class="price" href="fooddetail.html">
                                     <button class="btn btn-primary">Xem chi tiết</button>
@@ -151,13 +182,73 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         </c:forEach>
                     </ul>
                 </div>
+
+
+
                 <div class="list-page">
-                    <c:forEach begin="1" end="${totalPages}" varStatus="loop">
-                        <div class="item">
-                            <a href="?page=${loop.index}">${loop.index}</a>
-                        </div>
-                    </c:forEach>
+                    <%-- Display the first page --%>
+                    <div class="item<% if (currentPage == 1) {
+                            out.print("active");
+                        } %>">
+                        <% if (request.getParameter("category") != null) {%>
+                        <a href="?category=<%= selectedCategory%>&page=1">1</a>
+                        <% } else if (request.getParameter("order") != null) {%>
+                        <a href="?order=<%= selectedPrice%>&page=1>">1</a>
+                        <% } else {%>
+                        <a href="?page=1">1</a>
+                        <% }%>
+                    </div>
+                    <%-- Display ellipsis at the beginning if the current page is greater than 4 --%>
+                    <% if (currentPage >= 4) { %>
+                    <div class="item">
+                        <span>...</span>
+                    </div>
+                    <% } %>
+
+                    <%-- Display the page numbers --%>
+                    <% for (int pageNumber = Math.max(2, currentPage - 1); pageNumber <= Math.min(totalPages - 1, currentPage + 1); pageNumber++) { %>
+                    <%-- Display the current page --%>
+                    <% if (pageNumber == currentPage) { %>
+                    <div class="item<% if (pageNumber == currentPage)
+                            out.print("active");%>">
+                        <a><%= pageNumber%></a>
+                    </div>
+                    <% } else {%>
+                    <%-- Display the pages before and after the current page --%>
+                    <div class="item">
+                        <% if (request.getParameter("category") != null) {%>
+                        <a href="?category=<%= selectedCategory%>&page=<%= pageNumber%>"><%= pageNumber%></a>
+                        <% } else if (request.getParameter("order") != null) {%>
+                        <a href="?order=<%= selectedPrice%>&page=<%=pageNumber%>"><%= pageNumber%></a>
+                        <% } else {%>
+                        <a href="?page=<%=pageNumber%>"><%= pageNumber%></a>
+                        <% }%>
+                    </div>
+                    <% } %>
+                    <% } %>
+
+                    <%-- Display ellipsis at the end if the current page is less than total pages - 3 --%>
+                    <% if (currentPage <= (totalPages - 3)) { %>
+                    <div class="item">
+                        <span>...</span>
+                    </div>
+                    <% }%>
+
+                    <%-- Display the last page --%>
+                    <div class="item<% if (currentPage == totalPages) {
+                            out.print("active");
+                        } %>">
+                        <%-- Check if 'category' parameter exists in the URL --%>
+                        <% if (request.getParameter("category") != null) {%>
+                        <a href="?category=<%= selectedCategory%>&page=<%= totalPages%>"><%= totalPages%></a>
+                        <% } else if (request.getParameter("order") != null) {%>
+                        <a href="?order=<%= selectedPrice%>&page=<%= totalPages%>"><%= totalPages%></a>
+                        <% } else {%>
+                        <a href="?page=<%= totalPages%>"><%= totalPages%></a>
+                        <% }%>
+                    </div>
                 </div>
+
             </div>
 
             <div id="footer">
@@ -204,25 +295,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         ></script>
         <script src="./js/script.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            function getListPage(page) {
-                $.ajax({
-                    url: 'your-controller-url',
-                    type: 'GET',
-                    data: {
-                        page: page
-                    },
-                    success: function (response) {
-                        // Xử lý dữ liệu trả về từ server
-                        // Cập nhật danh sách bản ghi trong trang JSP
-                        $('#list-products').html(response);
-                    },
-                    error: function () {
-                        // Xử lý khi có lỗi xảy ra trong quá trình gửi yêu cầu
-                        alert('Có lỗi xảy ra khi lấy danh sách bản ghi.');
-                    }
-                });
-            }
-        </script>
+
     </body>
 </html>
