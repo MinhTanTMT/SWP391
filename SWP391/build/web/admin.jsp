@@ -74,11 +74,83 @@
                 </div>
             </div>
 
+
             <c:set var="type" value="${requestScope.type}"/>
-            <c:set var="account" value="${sessionScope.delivery}"/>
+            <c:set var="account1" value="${sessionScope.delivery}"/>
+            <c:set var="account2" value="${sessionScope.manager}"/>
+
+            <c:if test="${type==2}">
+
+                <form action="manageralldone?id=${account2.id}" method="post">
+                    <input type="submit" value="AllOk">
+                </form> &nbsp;
+                <h2 style="font-size: 30px">&nbsp; Đơn chờ phê duyệt:</h2>     
+                <table style="width:98%; border:5px solid black; border-radius: 10px; background-color: greenyellow; font-size: 20px; margin: 10px; color: #e67e22">
+                    <tr>
+                        <th>Name</th>
+                        <th>Time</th>
+                        <th>Quantity</th>
+                        <th>Name food</th>
+                        <th>Status</th>
+                        <th>Select</th>
+                    </tr>  
+                    <c:forEach items="${requestScope.managerdone}" var="c">
+                        <tr>
+                            <td>${c.full_name}</td>
+                            <td>${c.timegiao}</td>
+                            <td>${c.quantity}</td>
+                            <td>${c.name_food}</td>
+                            <td>${c.status_order}</td>
+                            <td style="display: flex"> &nbsp;
+                                <form action="managerdone?id=${c.id}" method="post">
+                                    <input type="submit" value="OK">
+                                </form> &nbsp;
+                                <form action="managernull?id=${c.id}" method="post">
+                                    <input type="submit" value="Cancel">
+                                </form> &nbsp;
+                                <form action="managermoney?id=${c.price}" method="post">
+                                    <input type="submit" value="AllComplete">
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+                <h2 style="font-size: 30px">&nbsp; Chờ thanh toán:</h2>     
+                <table style="width:98%; border:5px solid black; border-radius: 10px; background-color: greenyellow; font-size: 20px; margin: 10px; color: #e67e22">
+                    <tr>
+                        <th>Name</th>
+                        <th>Time</th>
+                        <th>Quantity</th>
+                        <th>Name food</th>
+                        <th>Status</th>
+                        <th>Select</th>
+                    </tr>  
+                    <c:forEach items="${requestScope.managerok}" var="c">
+                        <tr>
+                            <td>${c.full_name}</td>
+                            <td>${c.timegiao}</td>
+                            <td>${c.quantity}</td>
+                            <td>${c.name_food}</td>
+                            <td>${c.status_order}</td>
+                            <td style="display: flex"> &nbsp;
+                                <form action="managerdone?id=${c.id}" method="post">
+                                    <input type="submit" value="OK">
+                                </form> &nbsp;
+                                <form action="managernull?id=${c.id}" method="post">
+                                    <input type="submit" value="Cancel">
+                                </form> &nbsp;
+                                <form action="managermoney?id=${c.price}" method="post">
+                                    <input type="submit" value="AllComplete">
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:if>
+
 
             <c:if test="${type==3}">
-                <h2 style="font-size: 30px">&nbsp; Đơn hàng chưa xử lý:</h2>             
+                <h2 style="font-size: 30px">&nbsp; Đơn hàng chưa xử lý:</h2> 
                 <table style="width:98%; border:5px solid black; border-radius: 10px; background-color: greenyellow; font-size: 20px; margin: 10px; color: #e67e22">
                     <tr>
                         <th>Name</th>
@@ -183,12 +255,6 @@
                         </tr>
                     </c:forEach>
                 </table>
-            </c:if>
-
-
-
-            <c:if test="${type==1}">
-
             </c:if>
 
 

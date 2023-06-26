@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.LoginDAO;
+import dal.OrderDetailDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,17 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Account;
 
 /**
- * Lớp gọi hàm và đưa dữ liệu lên trang
  *
- * @Phiên Bản : 1.0 04/06/2023
- * @Tác giả: Nguyễn Văn Thịnh
+ * @author msi
  */
-@WebServlet(name = "Login", urlPatterns = {"/login"})
-public class Login extends HttpServlet {
+@WebServlet(name = "ManagerNull", urlPatterns = {"/managernull"})
+public class ManagerNull extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +37,10 @@ public class Login extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Login</title>");
+            out.println("<title>Servlet ManagerNull</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ManagerNull at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,9 +58,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
-
-        //processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -78,34 +72,22 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String u = request.getParameter("user");
-        String p = request.getParameter("pass");
 
-        LoginDAO obj = new LoginDAO();
+        String id = request.getParameter("id");
+        int idOrder;
 
-        Account a = obj.getCheckAcc(u, p); // Kiểm tra có tài khoản ko
+        OrderDetailDAO obj = new OrderDetailDAO();
 
-        HttpSession session = request.getSession();
-
-        if (a == null) { // Nếu không có tài khoản trả về null
-            request.setAttribute("error", "Not invalid");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else { // Nếu tài khoản tồn tại thì bắn về trang home
-
-            if (a.getRole_name().equalsIgnoreCase("admin")) {
-                session.setAttribute("admin", a);
-                response.sendRedirect("new");
-            } else if (a.getRole_name().equalsIgnoreCase("delivery")) {
-                session.setAttribute("delivery", a);
-                response.sendRedirect("delivery");
-            } else if (a.getRole_name().equalsIgnoreCase("manager")) {
-                session.setAttribute("manager", a);
-                response.sendRedirect("manager");
-            } else if (a.getRole_name().equalsIgnoreCase("customer")) {
-                session.setAttribute("account", a);
-                response.sendRedirect("home");
-            }
+        try {
+            idOrder = Integer.parseInt(id);
+        } catch (Exception e) {
+            idOrder = 0;
         }
+
+        obj.getDKUpdateOrderDetail(idOrder, ".");
+
+        response.sendRedirect("manager");
+
     }
 
     /**

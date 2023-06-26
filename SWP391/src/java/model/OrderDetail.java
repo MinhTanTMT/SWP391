@@ -35,6 +35,22 @@ public class OrderDetail {
         this.name_food = name_food;
     }
 
+    public OrderDetail(int id, int price, String full_name, String timegiao, int quantity, String name_food, String status_order) {
+        this.id = id;
+        this.price = price;
+        this.full_name = full_name;
+        this.timegiao = timegiao;
+        this.status_order = status_order;
+        this.quantity = quantity;
+        this.name_food = name_food;
+    }
+
+    public OrderDetail(int id, String timegiao, int price) {
+        this.id = id;
+        this.timegiao = timegiao;
+        this.price = price;
+    }
+
     public int getId() {
         return id;
     }
