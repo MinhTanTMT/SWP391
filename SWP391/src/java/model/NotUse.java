@@ -11,6 +11,6 @@ package model;
 public class NotUse {
     int a;
     int b;
-    
+    int c;
     
 }
