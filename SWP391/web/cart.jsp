@@ -131,13 +131,28 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                 <span>Tổng tiền:</span>
                                 <span id="total-amount-value"></span>
                             </div>
-                            <a href="checkout.html">
+                            <form action="cart" method="post">
+                                <input style="display:none" name="checkout" value="true"></input>
                                 <button class="btn btn-primary">Thanh toán</button>
-                            </a>
+                            </form>
                         </div>
                     </c:if> 
 
                 </div>
+            </div>
+            <div class="popup-dialog" style="display: none;">
+                <!-- Đoạn mã HTML/JSP cho nội dung dialog -->
+                <h2>Thông báo</h2>
+                <p>Giỏ hàng sẽ không hiển thị các món mà danh sách <br> sản phẩm không có trong menu của ngày hôm nay:</p>
+                <ul>
+                    <li><b>${foodNames}</b></li>
+                        <!--<li>${cartItemsNotInMenu}</li>-->
+                </ul>
+
+                <!-- Nút đóng dialog -->
+            <button class="close-dialog"><i class="fas fa-times"></i></button>
+            <button class="close-button">Đóng</button>
+
             </div>
 
             <div id="footer">
@@ -204,20 +219,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                              updateTotalAmount();
                          }
                      }
-//                     function decreaseItem(customerId, foodId, index) {
-//                         $.ajax({
-//                             url: contextPath + "/cart", // URL của servlet
-//                             type: "POST", // Phương thức POST để gửi yêu cầu xóa
-//                             data: {customerId: customerId, foodId: foodId, functionId: "remove"}, // Tham số truyền đi
-//                             success: function (response) {
-////                                 window.location.href = contextPath + "/home";
-//                             },
-//                             error: function (xhr, status, error) {
-//                                 // Xử lý lỗi (nếu có)
-//                             }
-//                         });
-//                     }
-
                      function increaseQuantity(itemId, foodId) {
                          const quantityElement = document.getElementById('quantity-' + itemId);//quantity-1
                          let quantity = parseInt(quantityElement.textContent);
@@ -240,20 +241,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                              } else {
                                  const ratio = priceElement.textContent.split(".").length - 1;
                                  const priceRatio = Math.pow(1000, ratio);
-                                 console.log(priceRatio);
                                  price = parseFloat(priceElement.textContent.slice(0, -2)) * priceRatio;
-//                             const price = parseFloat(priceElement.getAttribute('data-price'));
                              }
-                             console.log("quantity", quantity);
-                             console.log("price", price);
                              totalAmount += quantity * price;
-                             console.log("totalAMount", price);
-                             console.log("totalAmount AFTER", formatCurrency(totalAmount));
-
-
                          }
                          const formattedTotalAmount = formatCurrency(totalAmount);
-                         console.log("new Total", formattedTotalAmount);
                          document.getElementById("total-amount-value").textContent = formatCurrency(totalAmount);
                      }
                      var contextPath = "<%= request.getContextPath()%>";
@@ -298,7 +290,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <c:forEach items="${cartItems}" var="item">
                      totalAmount += ${item.priceFinal};
             </c:forEach>
+            //302-320
+              $(document).ready(function() {
+        // Hiển thị dialog khi trạng thái cartNotification là true
+            var cartNotification = ${notification};
+            if (cartNotification) {
+                $(".popup-overlay").show();
+                $(".popup-dialog").show();
+            }
 
+            // Ẩn dialog khi nhấn vào nút đóng
+            $(".close-dialog").click(function() {
+            $(".popup-dialog").hide();
+            $(".popup-overlay").hide();
+            });
+            
+            $(".close-button").click(function() {
+            $(".popup-dialog").hide();
+            $(".popup-overlay").hide();
+            });
+        });
         </script>
 
     </body>

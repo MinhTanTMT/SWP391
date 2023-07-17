@@ -2,6 +2,10 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/Local%20Disk%20(D)/SWP3911Combine/src/java/dal/DBContext.java</file>
+            <file>file:/D:/Local%20Disk%20(D)/SWP3911Combine/src/java/model/Inforuser.java</file>
+            <file>file:/D:/Local%20Disk%20(D)/SWP3911Combine/src/java/dal/UserDAO.java</file>
+        </group>
     </open-files>
 </project-private>

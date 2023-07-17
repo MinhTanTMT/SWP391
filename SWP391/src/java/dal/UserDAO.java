@@ -26,8 +26,7 @@ public class UserDAO {
 
     public boolean insertInfo(Inforuser a) {
 
-        String sql = "I"
-                + "NSERT INTO `inforuser`\n"
+        String sql = "INSERT INTO `inforuser`\n"
                 + "(`id`,\n"
                 + "`id_acc`,\n"
                 + "`full_name`,\n"
@@ -150,30 +149,51 @@ public class UserDAO {
         return false;
     }
 
-
     public String getTimeCurrent() {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String strDate = formatter.format(date);
         return strDate;
     }
-    
-    
-    public boolean checkTimeTrue(String timeinput){
+
+    public boolean checkTimeTrue(String timeinput) {
         String timecurrent = getTimeCurrent();
-        
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date1 = LocalDate.parse(timeinput, formatter);
         LocalDate date2 = LocalDate.parse(timecurrent, formatter);
-        
+
         if (date1.isAfter(date2)) {
             return false;
         } else {
             return true;
         }
-  
+
     }
-    
+
+    public Inforuser getPhoneandAddress(int userId) {
+        Inforuser inforuser = new Inforuser();
+        Connection con = DBContext.getConnection();
+
+        String sql = "select inforuser.address, "
+                + "inforuser.phone "
+                + "from inforuser where inforuser.id_acc=?";
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, userId);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                String address = rs.getString("address");
+                String phone = rs.getString("phone");
+                inforuser.setAddress(address);
+                inforuser.setPhone(phone);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return inforuser;
+    }
 
     public static void main(String[] args) {
 

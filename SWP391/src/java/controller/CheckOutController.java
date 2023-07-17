@@ -5,6 +5,8 @@ package controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 import dal.CartDAO;
+import dal.OrderDetailDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,13 +18,15 @@ import java.util.List;
 import model.Account;
 import jakarta.servlet.http.HttpSession;
 import model.CartItem;
+import model.Inforuser;
+import model.OrderDetail;
 
 /**
  *
  * @author msi
  */
-@WebServlet(name = "CartServlet", urlPatterns = {"/cart"})
-public class CartController extends HttpServlet {
+@WebServlet(name = "CheckoutServlet", urlPatterns = {"/checkout"})
+public class CheckOutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -62,44 +66,29 @@ public class CartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
+         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
         if (account != null) {
             int customerId = account.getId();
             request.setAttribute("customerId", customerId);
-            CartDAO cartDAO = new CartDAO();
-            List<CartItem> cartItems = cartDAO.getCartItemsByCustomerId(customerId);
-             
-            //check cartItems not in menudaily today73-94
-            List<CartItem> cartItemsNotInMenu = cartDAO.getCartItemsNotInMenuDaily(customerId);
-            StringBuilder foodNamesBuilder = new StringBuilder();
-
-            for (CartItem cartItem : cartItemsNotInMenu) {
-                String foodName = cartItem.getFoodName();
-                foodNamesBuilder.append(foodName).append(", ");
-            }
-
-            String foodNames = foodNamesBuilder.toString();
-            if (foodNames.endsWith(", ")) {
-                foodNames = foodNames.substring(0, foodNames.length() - 2);
-            }
-            boolean cartNotification = false;
-
-            if(cartItemsNotInMenu.size() > 0 ){
-                cartNotification = true;
-            }
-            request.setAttribute("notification", cartNotification);
-            request.setAttribute("cartItemsNotInMenu", cartItemsNotInMenu.size());
-            request.setAttribute("foodNames", foodNames);
             
-//            int a = cartItems[0].price_final;
-            request.setAttribute("cartItems", cartItems);
+            CartDAO cartDAO = new CartDAO();
+            UserDAO userDAO = new UserDAO();
 
-            request.getRequestDispatcher("cart.jsp").forward(request, response);
+            List<CartItem> cartItems = cartDAO.getCartItemsByCustomerId(customerId);
+            Inforuser users = userDAO.getPhoneandAddress(customerId);
+            
+            String defaultAddress = users.getAddress();
+            String defaultPhoneNumber = users.getPhone();
+            
+            request.setAttribute("defaultAddress", defaultAddress);
+            request.setAttribute("defaultPhoneNumber", defaultPhoneNumber);
+            request.setAttribute("cartItems", cartItems);
+            request.getRequestDispatcher("checkout.jsp").forward(request, response);
         } else {
             request.setAttribute("error", "Invalid account");
             request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
+        }           
     }
 
     /**
@@ -120,36 +109,33 @@ public class CartController extends HttpServlet {
             int customerId = account.getId();
             CartDAO cartDAO = new CartDAO();
             
-            String checkout = "false";
-            checkout = request.getParameter("checkout");
-            if("true".equals(checkout)){
-                response.sendRedirect("checkout");
-
-            } else {
-            String foodId = request.getParameter("foodId");
-            String functionId = request.getParameter("functionId");
-            String quantity = request.getParameter("quantity");
-
-            if (foodId != null && !foodId.isEmpty()) {
-            int addFoodId = Integer.parseInt(foodId);
-            int quantityUpdate = Integer.parseInt(quantity);
-
-                 if("add".equals(functionId)){
-                     cartDAO.UpdateItem(customerId, addFoodId, quantityUpdate);
-                }
-            }
-            String removeFoodIds = request.getParameter("remove");
-            if (removeFoodIds != null) {
-                    int removeFoodId = Integer.parseInt(removeFoodIds);
-                    cartDAO.removeCartItem(customerId, removeFoodId);
-                
-            }
             List<CartItem> cartItems = cartDAO.getCartItemsByCustomerId(customerId);
-            request.setAttribute("cartItems", cartItems);
+            
+            String phone = request.getParameter("phone");
+            String address = request.getParameter("address");
+            
+            OrderDetailDAO orderDetail = new OrderDetailDAO();
+            orderDetail.addOrder(customerId, phone, address);
+            
+            int orderId;
+            orderId = orderDetail.getOrderId(customerId);
+            
+            if(orderId > 0){
+                for (CartItem item : cartItems) {
+                int foodId = item.getFoodId();
+                int quantity = item.getQuantity();
+                int price = item.getQuantity() * item.getPriceFinal();
+
+                orderDetail.saveOrderDetail(orderId, foodId, quantity, price); // Hàm lưu thông tin chi tiết sản phẩm
+                cartDAO.deleteCartItem(foodId, customerId);
+                }  
+            }
+                                                 
+            
+
             request.getRequestDispatcher("cart.jsp").forward(request, response);
             // Trả về kết quả thành công (nếu cần)
             response.setStatus(HttpServletResponse.SC_OK);
-            }
         } else {
             // Trả về lỗi nếu không tìm thấy tài khoản hợp lệ
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

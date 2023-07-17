@@ -46,7 +46,60 @@ public class CartDAO extends DBContext {
         }
         return cartItems;
     }
+    
+    
+    public List<CartItem> getCartItemsNotInMenuDaily(int customerId) {
+        List<CartItem> cartItems = new ArrayList<>();
+        Connection con = DBContext.getConnection();
 
+        String sql = "SELECT food.id, food.img, food.name_food, cart.quantity, food.describe_food, food.price_sell, food.img, menudaily.discout, menudaily.quantity, food.price_sell * menudaily.discout AS price_final "
+                + "FROM cart "
+                + "JOIN food ON cart.id_food = food.id "
+                + "LEFT JOIN menudaily ON food.id = menudaily.id_food "
+                + "WHERE cart.customer = ? AND menudaily.id_food IS NULL";
+
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, customerId);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                CartItem cartItem = new CartItem(
+                        rs.getInt("id"),
+                        rs.getString("name_food"),
+                        rs.getString("img"),
+                        rs.getInt("quantity"),
+                        rs.getInt("price_sell"),
+                        rs.getInt("price_final")
+                );
+                cartItems.add(cartItem);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return cartItems;
+    }
+/*
+    public int getQuantityByFoodId(int customerId, int foodId) {
+        int quantity = 0;
+        Connection con = DBContext.getConnection();
+
+        String sql = "SELECT cart.quantity"
+                + "FROM cart "
+                + "WHERE cart.customer = ? AND cart.id_food = ? ";
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, customerId);
+            st.setInt(2, foodId);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                quantity = rs.getInt("quantity");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return quantity;
+    }
+*/
     public void removeCartItem(int customerId, int foodId) {
         Connection con = DBContext.getConnection();
 
@@ -64,6 +117,23 @@ public class CartDAO extends DBContext {
         }
     }
     
+//        public void addNewCartItem(int customerId, int foodId) {
+//        Connection con = DBContext.getConnection();
+//
+//        String sql = " INSERT INTO cart(id, customer, id_food,quantity)\n" +
+//"       VALUES (?, ?, ?,?);";
+//
+//        try {
+//            PreparedStatement st = con.prepareStatement(sql);
+//            st.setInt(1, customerId);
+//            st.setInt(2, foodId);
+//            st.setInt(3, 1);        ;
+//            st.executeUpdate();
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        }
+//    }
+
     public void UpdateItem(int customerId, int foodId, int quantity) {
         Connection con = DBContext.getConnection();
 
@@ -163,6 +233,24 @@ public class CartDAO extends DBContext {
             System.out.println(e.getMessage());
         }
         return count > 0;
+    }
+    
+    
+      public void deleteCartItem(int foodId, int customerId) {
+        Connection con = DBContext.getConnection();
+        
+        String sql = "DELETE FROM cart "
+                   + "WHERE id_food = ? AND customer = ?";
+        
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, foodId);
+            st.setInt(2, customerId);
+            st.executeUpdate();
+            
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 
 }

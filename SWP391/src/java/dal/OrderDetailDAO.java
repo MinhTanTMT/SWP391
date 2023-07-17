@@ -333,5 +333,61 @@ public class OrderDetailDAO {
 
 //        System.out.println(a);
     }
+    
+    public void addOrder(int customer, String phone, String address) {
+        Connection con = DBContext.getConnection();
+        //dang sai data
+        String sql = "INSERT INTO oorder (customer, phone, address, status_order) VALUES (?, ?, ?, 'processing')";
+        
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, customer);
+            st.setString(2, phone);
+            st.setString(3, address);
+            st.executeUpdate();
+            
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+     public int getOrderId(int customerId) {
+        int orderId = 0;
+        Connection con = DBContext.getConnection();
+        
+        String sql = "SELECT MAX(id) AS max_order_id "
+                   + "FROM oorder "
+                   + "WHERE customer = ?";
+        
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, customerId);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                orderId = rs.getInt("max_order_id");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return orderId;
+    }
+     
+     public void saveOrderDetail(int orderId, int foodId, int quantity, int price) {
+        Connection con = DBContext.getConnection();
+        
+        String sql = "INSERT INTO orderdetail (order_id, id_food, quantity, price) VALUES (?, ?, ?, ?)";
+        
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, orderId);
+            st.setInt(2, foodId);
+            st.setInt(3, quantity);
+            st.setInt(4, price);
+            st.executeUpdate();
+            
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 
 }
