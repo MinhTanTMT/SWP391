@@ -88,22 +88,26 @@ public class Login extends HttpServlet {
         HttpSession session = request.getSession();
 
         if (a == null) { // Nếu không có tài khoản trả về null
-            request.setAttribute("error", "Not invalid");
+            request.setAttribute("error", "Invalid");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else { // Nếu tài khoản tồn tại thì bắn về trang home
-
-            if (a.getRole_name().equalsIgnoreCase("admin")) {
-                session.setAttribute("admin", a);
-                response.sendRedirect("new");
-            } else if (a.getRole_name().equalsIgnoreCase("delivery")) {
-                session.setAttribute("delivery", a);
-                response.sendRedirect("delivery");
-            } else if (a.getRole_name().equalsIgnoreCase("manager")) {
-                session.setAttribute("manager", a);
-                response.sendRedirect("manager");
-            } else if (a.getRole_name().equalsIgnoreCase("customer")) {
-                session.setAttribute("account", a);
-                response.sendRedirect("home");
+            if (obj.checkLogin(a.getId())) {
+                if (a.getRole_name().equalsIgnoreCase("admin")) {
+                    session.setAttribute("admin", a);
+                    response.sendRedirect("new");
+                } else if (a.getRole_name().equalsIgnoreCase("delivery")) {
+                    session.setAttribute("delivery", a);
+                    response.sendRedirect("delivery");
+                } else if (a.getRole_name().equalsIgnoreCase("manager")) {
+                    session.setAttribute("manager", a);
+                    response.sendRedirect("manager");
+                } else if (a.getRole_name().equalsIgnoreCase("customer")) {
+                    session.setAttribute("account", a);
+                    response.sendRedirect("home");
+                }
+            } else {
+                request.setAttribute("error", "The account has been banned");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         }
     }

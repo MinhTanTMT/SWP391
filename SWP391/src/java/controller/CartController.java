@@ -91,7 +91,7 @@ public class CartController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
-
+        
         if (account != null) {
             int customerId = account.getId();
             CartDAO cartDAO = new CartDAO();

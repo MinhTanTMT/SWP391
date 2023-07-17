@@ -17,12 +17,11 @@ public class Inforuser {
     private String phone;
     private String gender;
     private String role_name;
-    private String img;
 
     public Inforuser() {
     }
 
-    public Inforuser(int id, int id_acc, String full_name, String dob, String address, String phone, String gender, String role_name, String img) {
+    public Inforuser(int id, int id_acc, String full_name, String dob, String address, String phone, String gender, String role_name) {
         this.id = id;
         this.id_acc = id_acc;
         this.full_name = full_name;
@@ -31,7 +30,6 @@ public class Inforuser {
         this.phone = phone;
         this.gender = gender;
         this.role_name = role_name;
-        this.img = img;
     }
 
     public Inforuser(int id_acc, String full_name, String address, String phone, String gender, String role_name) {
@@ -62,7 +60,7 @@ public class Inforuser {
     }
 
     public String getFull_name() {
-        return full_name;
+        return full_name.toUpperCase();
     }
 
     public void setFull_name(String full_name) {
@@ -78,7 +76,7 @@ public class Inforuser {
     }
 
     public String getAddress() {
-        return address;
+        return address.toUpperCase();
     }
 
     public void setAddress(String address) {
@@ -94,7 +92,7 @@ public class Inforuser {
     }
 
     public String getGender() {
-        return gender;
+        return gender.toUpperCase();
     }
 
     public void setGender(String gender) {
@@ -109,12 +107,5 @@ public class Inforuser {
         this.role_name = role_name;
     }
 
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
 
 }

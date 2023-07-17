@@ -12,7 +12,7 @@ public class DBContext {
         Connection c = null; 
         try {
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver()); 
-            String url = "jdbc:mySQL://localhost:3306/swp391";
+            String url = "jdbc:mySQL://localhost:3306/swpedit";
             String username = "root";
             String password = "123456789?TM";
                      

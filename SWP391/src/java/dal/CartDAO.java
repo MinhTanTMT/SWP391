@@ -47,27 +47,6 @@ public class CartDAO extends DBContext {
         return cartItems;
     }
 
-    public int getQuantityByFoodId(int customerId, int foodId) {
-        int quantity = 0;
-        Connection con = DBContext.getConnection();
-
-        String sql = "SELECT cart.quantity"
-                + "FROM cart "
-                + "WHERE cart.customer = ? AND cart.id_food = ? ";
-        try {
-            PreparedStatement st = con.prepareStatement(sql);
-            st.setInt(1, customerId);
-            st.setInt(2, foodId);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                quantity = rs.getInt("quantity");
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return quantity;
-    }
-
     public void removeCartItem(int customerId, int foodId) {
         Connection con = DBContext.getConnection();
 
@@ -84,23 +63,7 @@ public class CartDAO extends DBContext {
             System.out.println(this.getClass().getName() + " : " + sql);
         }
     }
-//        public void addNewCartItem(int customerId, int foodId) {
-//        Connection con = DBContext.getConnection();
-//
-//        String sql = " INSERT INTO cart(id, customer, id_food,quantity)\n" +
-//"       VALUES (?, ?, ?,?);";
-//
-//        try {
-//            PreparedStatement st = con.prepareStatement(sql);
-//            st.setInt(1, customerId);
-//            st.setInt(2, foodId);
-//            st.setInt(3, 1);        ;
-//            st.executeUpdate();
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//        }
-//    }
-
+    
     public void UpdateItem(int customerId, int foodId, int quantity) {
         Connection con = DBContext.getConnection();
 

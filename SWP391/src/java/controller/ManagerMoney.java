@@ -83,7 +83,7 @@ public class ManagerMoney extends HttpServlet {
         } catch (Exception e) {
             idAcc = 0;
         }
-        
+
         obj.getAddRoseSalary(idAcc, 0.1);
 
         response.sendRedirect("manager");

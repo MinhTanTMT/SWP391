@@ -112,7 +112,7 @@ public class LoginDAO extends DBContext {
 
         Connection con = DBContext.getConnection();
 
-        String sql = "INSERT INTO `swp391tmtnew`.`acc` "
+        String sql = "INSERT INTO `acc` "
                 + "(`id`, `username`, `pass`, `role_name`) \n"
                 + "VALUES (?, ? , ? , ?)";
         try {
@@ -199,7 +199,6 @@ public class LoginDAO extends DBContext {
         return true;
     }
     
-    
     /**
      * Ramdom một số ngẫu nhiên
      */
@@ -210,7 +209,8 @@ public class LoginDAO extends DBContext {
         int n = rand.nextInt(upperBound - lowerBound + 1) + lowerBound;
         return n;
     }
-
+      
+    
     public static void main(String[] args) {
 
         LoginDAO c = new LoginDAO();
@@ -223,6 +223,33 @@ public class LoginDAO extends DBContext {
         Account b = new Account((c.getCountAcc() + 1), "minhtanav", "12345678", "customer");
         c.getCreateAcc(b);
 
+    }
+    
+    
+    public boolean checkLogin(int id){
+        
+        Connection con = DBContext.getConnection();
+
+        boolean dk = false;
+        
+        String check;
+
+        String sql = "select accstatus from acc where acc.id=?";
+
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                check = rs.getString("accstatus");
+                if(check.equalsIgnoreCase("ok")){
+                    dk = true;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return dk; 
     }
 
 }
